@@ -5,6 +5,10 @@ class ChatListener:
 
     @property
     def _commands(self):
+        """
+        Геттер текстовых команд бота.
+        :return:
+        """
         return {
             '/menu': self.bot.show_keyboard,
             '/help': self.bot.print_help,
@@ -17,6 +21,13 @@ class ChatListener:
         }
 
     def listen(self, message):
+        """
+        Слушаем чат.
+        Если более 20 символов, выдаем ошибку.
+        Не распространяется на выбор по кнопке.
+        :param message:
+        :return:
+        """
         user_id = message.chat.id
         if len(message.text) > 20:
             self.bot.error(user_id)
@@ -29,4 +40,9 @@ class ChatListener:
             command(user_id)
 
     def _find(self, message):
+        """
+        Обертка для поиска.
+        :param message:
+        :return:
+        """
         self.bot.find(message.chat.id, message.text)
